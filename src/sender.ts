@@ -9,9 +9,16 @@ app.innerHTML = `
   </div>
 `;
 
-const waitUntilIceCandidate = (connection: RTCPeerConnection) =>
+/**
+ * IceCandidateイベントが発生するまで待機する
+ * @param connection 待機するコネクション
+ * @returns IceCandidateイベント
+ */
+const waitUntilIceCandidate = (
+  connection: RTCPeerConnection,
+): Promise<RTCPeerConnectionIceEvent> =>
   new Promise((resolve) => {
-    connection.addEventListener("icecandidate", resolve);
+    connection.addEventListener("icecandidate", resolve, { once: true });
   });
 
 /**
@@ -25,7 +32,7 @@ window.onload = async () => {
   console.log("Offer created:", description);
   const [iceCandidateEvent] = await Promise.all([
     waitUntilIceCandidate(connection),
-    connection.setLocalDescription(description)
+    connection.setLocalDescription(description),
   ]);
   console.log("ICE candidate event:", iceCandidateEvent);
 };
