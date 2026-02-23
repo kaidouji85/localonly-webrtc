@@ -10,11 +10,16 @@ const app =
 app.innerHTML = `
   <div>
     <h1>受信ページ (Receiver)</h1>
-    <h2>Remote RTCSessionDescriptionInit</h2>
+    <h3>Remote RTCSessionDescriptionInit</h3>
     <textarea class="description-input" id="remote-description" placeholder="Remote RTCSessionDescriptionInitを入力してください"></textarea>
-    <h2>Remote ICE RTCIceCandidateInit</h2>
+    <h3>Remote ICE RTCIceCandidateInit</h3>
     <textarea class="ice-input" id="remote-ice-candidate" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
-    <button id="connect-button">接続する</button>
+    <div><button id="connect-button">接続する</button></div>
+
+    <h3>RTCSessionDescriptionInit</h3>
+    <div id="description"></div>
+    <h3>RTCIceCandidateInit</h3>
+    <div id="ice-candidate"></div>
   </div>
 `;
 
@@ -47,16 +52,39 @@ const getRemoteRTCIceCandidateInit = (): RTCIceCandidateInit => {
 };
 
 /**
+ * RTCSessionDescriptionInitを画面に表示する
+ * @param value 表示するRTCSessionDescriptionInit
+ */
+const displayRTCSessionDescriptionInit = (
+  description: RTCSessionDescriptionInit,
+) => {
+  const descriptionElement =
+    document.getElementById("description") ?? document.createElement("div");
+  descriptionElement.textContent = JSON.stringify(description);
+};
+
+/**
+ * RTCIceCandidateInitを画面に表示する
+ * @param value 表示するRTCIceCandidateInit
+ */
+const displayRTCIceCandidate = (candidate: RTCIceCandidateInit) => {
+  const iceCandidateElement =
+    document.getElementById("ice-candidate") ?? document.createElement("div");
+  iceCandidateElement.textContent = JSON.stringify(candidate);
+};
+
+/**
  * 接続ボタンが押されたときの処理
  */
 const onConnectButtonPushed = async () => {
   const connection = new RTCPeerConnection();
   const remoteDescription = getRemoteRTCSessionDescriptionInit();
   const remoteIceCandidate = getRemoteRTCIceCandidateInit();
-  connection.setRemoteDescription(remoteDescription);
-  connection.addIceCandidate(remoteIceCandidate);
+  await connection.setRemoteDescription(remoteDescription);
+  await connection.addIceCandidate(remoteIceCandidate);
   const description = await connection.createAnswer();
   const [iceCandidateEvent] = await Promise.all([
+    // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく
     waitUntilIceCandidate(connection),
     connection.setLocalDescription(description),
   ]);
@@ -64,7 +92,8 @@ const onConnectButtonPushed = async () => {
     throw new Error("ICE Candidateが見つかりませんでした");
   }
 
-  
+  displayRTCSessionDescriptionInit(description);
+  displayRTCIceCandidate(iceCandidateEvent.candidate.toJSON());
 };
 
 /**

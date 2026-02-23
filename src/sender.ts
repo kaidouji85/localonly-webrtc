@@ -15,7 +15,7 @@ app.innerHTML = `
   </div>
 `;
 
-/**1
+/**
  * RTCSessionDescriptionInitを画面に表示する
  * @param value 表示するRTCSessionDescriptionInit
  */
