@@ -94,3 +94,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.description-input {
+  min-width: 40em;
+  min-height: 20em;
+}
+
+.ice-input {
+  min-width: 40em;
+  min-height: 10em;
+}
