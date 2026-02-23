@@ -13,6 +13,12 @@ app.innerHTML = `
   </div>
 `;
 
+const getRemoteDescription = (): RTCSessionDescriptionInit => {
+  const found = document.getElementById("remote-description");
+  const remoteDescriptionInput = found instanceof HTMLTextAreaElement ? found : document.createElement("textarea");
+  return JSON.parse(remoteDescriptionInput.value) as RTCSessionDescriptionInit;
+}
+
 window.onload = async () => {
   const connection = new RTCPeerConnection();
 };
