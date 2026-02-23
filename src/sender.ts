@@ -6,28 +6,28 @@ const app =
 app.innerHTML = `
   <div>
     <h1>送信ページ (Sender)</h1>
-    <h3>Description</h3>
+    <h3>RTCSessionDescriptionInit</h3>
     <div id="description"></div>
-    <h3>ICE Candidate</h3>
+    <h3>RTCIceCandidateInit</h3>
     <div id="ice-candidate"></div>
   </div>
 `;
 
-/**
- * Descriptionを画面に表示する
- * @param description 表示するDescription
+/**1
+ * RTCSessionDescriptionInitを画面に表示する
+ * @param value 表示するRTCSessionDescriptionInit
  */
-const displayDescription = (description: RTCSessionDescriptionInit) => {
+const displayRTCSessionDescriptionInit = (description: RTCSessionDescriptionInit) => {
   const descriptionElement =
     document.getElementById("description") ?? document.createElement("div");
   descriptionElement.textContent = JSON.stringify(description);
 };
 
 /**
- * ICE Candidateを画面に表示する
- * @param candidate 表示するICE Candidate
+ * RTCIceCandidateInitを画面に表示する
+ * @param value 表示するRTCIceCandidateInit
  */
-const displayIceCandidate = (candidate: RTCIceCandidate) => {
+const displayRTCIceCandidate = (candidate: RTCIceCandidateInit) => {
   const iceCandidateElement =
     document.getElementById("ice-candidate") ?? document.createElement("div");
   iceCandidateElement.textContent = JSON.stringify(candidate);
@@ -61,6 +61,6 @@ window.onload = async () => {
     throw new Error("ICE Candidateが見つかりませんでした");
   }
   
-  displayDescription(description);
-  displayIceCandidate(iceCandidateEvent.candidate);
+  displayRTCSessionDescriptionInit(description);
+  displayRTCIceCandidate(iceCandidateEvent.candidate.toJSON());
 };
