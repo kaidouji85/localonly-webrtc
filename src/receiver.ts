@@ -1,3 +1,4 @@
+import { RTCSessionDescriptionInitSchema } from "./schemas/rtc-session-description-init";
 import "./style.css";
 
 const app =
@@ -13,10 +14,15 @@ app.innerHTML = `
   </div>
 `;
 
+/**
+ * 入力したRemote Descriptionを取得する
+ * @returns 入力したRemote Description、不正な場合は例外を投げる
+ */
 const getRemoteDescription = (): RTCSessionDescriptionInit => {
   const found = document.getElementById("remote-description");
   const remoteDescriptionInput = found instanceof HTMLTextAreaElement ? found : document.createElement("textarea");
-  return JSON.parse(remoteDescriptionInput.value) as RTCSessionDescriptionInit;
+  const parsed = JSON.parse(remoteDescriptionInput.value);
+  return RTCSessionDescriptionInitSchema.parse(parsed);
 }
 
 window.onload = async () => {
