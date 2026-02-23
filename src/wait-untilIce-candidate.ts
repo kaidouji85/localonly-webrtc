@@ -5,7 +5,21 @@
  */
 export const waitUntilIceCandidate = (
   connection: RTCPeerConnection,
-): Promise<RTCPeerConnectionIceEvent> =>
-  new Promise((resolve) => {
-    connection.addEventListener("icecandidate", resolve, { once: true });
+): Promise<RTCIceCandidate[]> => {
+  let handler: ((event: RTCPeerConnectionIceEvent) => void) | null = null;
+  let candidates: RTCIceCandidate[] = [];
+  return new Promise<RTCIceCandidate[]>((resolve) => {
+    handler = (event: RTCPeerConnectionIceEvent) => {
+      if (event.candidate === null) {
+        resolve(candidates);
+      } else {
+        candidates = [...candidates, event.candidate];
+      }
+    };
+    connection.addEventListener("icecandidate", handler);
+  }).finally(() => {
+    if (handler) {
+      connection.removeEventListener("icecandidate", handler);
+    }
   });
+};
