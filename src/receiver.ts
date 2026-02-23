@@ -67,13 +67,13 @@ const displayRTCSessionDescriptionInit = (
 };
 
 /**
- * RTCIceCandidateInitを画面に表示する
+ * すべてのRTCIceCandidateInitを画面に表示する
  * @param value 表示するRTCIceCandidateInit
  */
-const displayRTCIceCandidate = (candidate: RTCIceCandidateInit) => {
+const displayRTCIceCandidateInits = (candidates: RTCIceCandidateInit[]) => {
   const iceCandidateElement =
     document.getElementById("ice-candidate") ?? document.createElement("div");
-  iceCandidateElement.textContent = JSON.stringify(candidate);
+  iceCandidateElement.textContent = JSON.stringify(candidates);
 };
 
 /**
@@ -86,17 +86,13 @@ const onConnectButtonPushed = async () => {
   await connection.setRemoteDescription(remoteDescription);
   await connection.addIceCandidate(remoteIceCandidate);
   const description = await connection.createAnswer();
-  const [iceCandidateEvent] = await Promise.all([
+  const [iceCandidates] = await Promise.all([
     // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく
     waitUntilIceCandidate(connection),
     connection.setLocalDescription(description),
   ]);
-  if (!iceCandidateEvent.candidate) {
-    throw new Error("ICE Candidateが見つかりませんでした");
-  }
-
   displayRTCSessionDescriptionInit(description);
-  displayRTCIceCandidate(iceCandidateEvent.candidate.toJSON());
+  displayRTCIceCandidateInits(iceCandidates.map((c) => c.toJSON()));
 };
 
 /**
