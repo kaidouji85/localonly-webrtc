@@ -8,10 +8,19 @@ const app =
 app.innerHTML = `
   <div>
     <h1>送信ページ (Sender)</h1>
+
+    <h2>自身の情報</h2>
     <h3>RTCSessionDescriptionInit</h3>
     <div id="description"></div>
     <h3>RTCIceCandidateInit</h3>
     <div id="ice-candidate"></div>
+
+    <h2>相手の情報を入力する</h2>
+    <h3>Remote RTCSessionDescriptionInit</h3>
+    <textarea class="description-input" id="remote-description" placeholder="Remote RTCSessionDescriptionInitを入力してください"></textarea>
+    <h3>Remote ICE RTCIceCandidateInit</h3>
+    <textarea class="ice-input" id="remote-ice-candidate" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
+    <div><button id="connect-button">接続する</button></div>
   </div>
 `;
 
