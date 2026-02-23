@@ -53,6 +53,7 @@ window.onload = async () => {
   const sendChannel = connection.createDataChannel("sendDataChannel");
   const description = await connection.createOffer();
   const [iceCandidateEvent] = await Promise.all([
+    // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく
     waitUntilIceCandidate(connection),
     connection.setLocalDescription(description),
   ]);
