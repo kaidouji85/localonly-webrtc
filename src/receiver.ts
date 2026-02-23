@@ -1,6 +1,8 @@
+import "./style.css";
+
 import { RTCIceCandidateInitSchema } from "./schemas/rtc-ice-candidate-init";
 import { RTCSessionDescriptionInitSchema } from "./schemas/rtc-session-description-init";
-import "./style.css";
+import { waitUntilIceCandidate } from "./wait-untilIce-candidate";
 
 const app =
   document.querySelector<HTMLDivElement>("#app") ||
@@ -12,6 +14,7 @@ app.innerHTML = `
     <textarea class="description-input" id="remote-description" placeholder="Remote RTCSessionDescriptionInitを入力してください"></textarea>
     <h2>Remote ICE RTCIceCandidateInit</h2>
     <textarea class="ice-input" id="remote-ice-candidate" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
+    <button id="connect-button">接続する</button>
   </div>
 `;
 
@@ -43,6 +46,33 @@ const getRemoteRTCIceCandidateInit = (): RTCIceCandidateInit => {
   return RTCIceCandidateInitSchema.parse(parsed);
 };
 
-window.onload = async () => {
+/**
+ * 接続ボタンが押されたときの処理
+ */
+const onConnectButtonPushed = async () => {
   const connection = new RTCPeerConnection();
+  const remoteDescription = getRemoteRTCSessionDescriptionInit();
+  const remoteIceCandidate = getRemoteRTCIceCandidateInit();
+  connection.setRemoteDescription(remoteDescription);
+  connection.addIceCandidate(remoteIceCandidate);
+  const description = await connection.createAnswer();
+  const [iceCandidateEvent] = await Promise.all([
+    waitUntilIceCandidate(connection),
+    connection.setLocalDescription(description),
+  ]);
+  if (!iceCandidateEvent.candidate) {
+    throw new Error("ICE Candidateが見つかりませんでした");
+  }
+
+  
+};
+
+/**
+ * エントリポイント
+ */
+window.onload = async () => {
+  const connectButton =
+    document.getElementById("connect-button") ??
+    document.createElement("button");
+  connectButton.addEventListener("click", onConnectButtonPushed);
 };

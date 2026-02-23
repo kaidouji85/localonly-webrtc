@@ -1,5 +1,7 @@
 import "./style.css";
 
+import { waitUntilIceCandidate } from "./wait-untilIce-candidate";
+
 const app =
   document.querySelector<HTMLDivElement>("#app") ??
   document.createElement("div");
@@ -32,18 +34,6 @@ const displayRTCIceCandidate = (candidate: RTCIceCandidateInit) => {
     document.getElementById("ice-candidate") ?? document.createElement("div");
   iceCandidateElement.textContent = JSON.stringify(candidate);
 };
-
-/**
- * IceCandidateイベントが発生するまで待機する
- * @param connection 待機するコネクション
- * @returns IceCandidateイベント
- */
-const waitUntilIceCandidate = (
-  connection: RTCPeerConnection,
-): Promise<RTCPeerConnectionIceEvent> =>
-  new Promise((resolve) => {
-    connection.addEventListener("icecandidate", resolve, { once: true });
-  });
 
 /**
  * エントリポイント
