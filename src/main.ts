@@ -1,24 +1,23 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
+const app = document.querySelector<HTMLDivElement>('#app')
+
+if (!app) {
+	throw new Error('app element not found')
+}
+
+app.innerHTML = `
+	<section class="stack">
+		<h1>Local Only WebRTC Sample</h1>
+		<p>送信ページと受信ページを別エントリに分けたサンプルです。</p>
+		<div class="card stack">
+			<h2>ページ選択</h2>
+			<div class="links">
+				<a class="button-link" href="/sender.html">送信ページを開く</a>
+				<a class="button-link" href="/receiver.html">受信ページを開く</a>
+			</div>
+			<p class="status">別タブでそれぞれ開くとローカル接続を確認できます。</p>
+		</div>
+	</section>
 `
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
