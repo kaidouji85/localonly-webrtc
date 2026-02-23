@@ -73,14 +73,17 @@ const getRemoteRTCSessionDescriptionInit = (): RTCSessionDescriptionInit => {
  * 入力したRemote RTCIceCandidateInitを取得する
  * @returns 入力したRemote RTCIceCandidateInit、不正な場合は例外を投げる
  */
-const getRemoteRTCIceCandidateInit = (): RTCIceCandidateInit => {
+const getRemoteRTCIceCandidateInits = (): RTCIceCandidateInit[] => {
   const found = document.getElementById("remote-ice-candidate");
   const remoteIceCandidateInput =
     found instanceof HTMLTextAreaElement
       ? found
       : document.createElement("textarea");
   const parsed = JSON.parse(remoteIceCandidateInput.value);
-  return RTCIceCandidateInitSchema.parse(parsed);
+  if (!Array.isArray(parsed)) {
+    throw new Error("Remote RTCIceCandidateInitは配列である必要があります");
+  }
+  return parsed.map((c) => RTCIceCandidateInitSchema.parse(c));
 };
 
 /**
@@ -92,9 +95,11 @@ const onConnectButtonPushed = async () => {
   }
 
   const remoteDescription = getRemoteRTCSessionDescriptionInit();
-  const remoteIceCandidate = getRemoteRTCIceCandidateInit();
+  const remoteIceCandidates = getRemoteRTCIceCandidateInits();
   await connection.setRemoteDescription(remoteDescription);
-  await connection.addIceCandidate(remoteIceCandidate);
+  await Promise.all([
+    ...remoteIceCandidates.map((c) => connection?.addIceCandidate(c)),
+  ]);
 };
 
 /**
