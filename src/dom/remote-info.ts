@@ -14,7 +14,6 @@ export const REMOTE_INFO_HTML = `
   <textarea class="description-input" id="${REMOTE_DESCRIPTION_ELEMENT_ID}" placeholder="Remote RTCSessionDescriptionInitを入力してください"></textarea>
   <h3>Remote ICE RTCIceCandidateInit</h3>
   <textarea class="ice-input" id="${REMOTE_ICE_CANDIDATE_ELEMENT_ID}" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
-  <div><button id="connect-button">接続する</button></div>
 `;
 
 /**

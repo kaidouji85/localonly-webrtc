@@ -11,6 +11,7 @@ import {
   getRemoteRTCSessionDescription,
   REMOTE_INFO_HTML,
 } from "./dom/remote-info";
+import { CONNECT_HTML, getConnectButtonElement } from "./dom/connect";
 
 /** アプリのルートHTML要素 */
 const app =
@@ -20,6 +21,7 @@ app.innerHTML = `
   <div>
     <h1>受信ページ (Receiver)</h1>
     ${REMOTE_INFO_HTML}
+    ${CONNECT_HTML}    
     ${OWN_INFO_HTML}
   </div>
 `;
@@ -49,8 +51,6 @@ const onConnectButtonPushed = async () => {
  * エントリポイント
  */
 window.onload = async () => {
-  const connectButton =
-    document.getElementById("connect-button") ??
-    document.createElement("button");
+  const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
 };
