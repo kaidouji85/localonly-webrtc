@@ -3,6 +3,7 @@ import "./style.css";
 import { RTCIceCandidateInitSchema } from "./schemas/rtc-ice-candidate-init";
 import { RTCSessionDescriptionInitSchema } from "./schemas/rtc-session-description-init";
 import { waitUntilIceCandidate } from "./wait-untilIce-candidate";
+import { displayOwnDescription, displayOwnIceCandidates, OWN_INFO_HTML } from "./dom/own-info";
 
 const app =
   document.querySelector<HTMLDivElement>("#app") ||
@@ -18,11 +19,7 @@ app.innerHTML = `
     <textarea class="ice-input" id="remote-ice-candidate" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
     <div><button id="connect-button">接続する</button></div>
 
-    <h2>自身の情報</h2>
-    <h3>RTCSessionDescriptionInit</h3>
-    <div id="description"></div>
-    <h3>RTCIceCandidateInit</h3>
-    <div id="ice-candidate"></div>
+    ${OWN_INFO_HTML}
   </div>
 `;
 
@@ -59,28 +56,6 @@ const getRemoteRTCIceCandidateInits = (): RTCIceCandidateInit[] => {
 };
 
 /**
- * RTCSessionDescriptionInitを画面に表示する
- * @param value 表示するRTCSessionDescriptionInit
- */
-const displayRTCSessionDescriptionInit = (
-  description: RTCSessionDescriptionInit,
-) => {
-  const descriptionElement =
-    document.getElementById("description") ?? document.createElement("div");
-  descriptionElement.textContent = JSON.stringify(description);
-};
-
-/**
- * すべてのRTCIceCandidateInitを画面に表示する
- * @param value 表示するRTCIceCandidateInit
- */
-const displayRTCIceCandidateInits = (candidates: RTCIceCandidateInit[]) => {
-  const iceCandidateElement =
-    document.getElementById("ice-candidate") ?? document.createElement("div");
-  iceCandidateElement.textContent = JSON.stringify(candidates);
-};
-
-/**
  * 接続ボタンが押されたときの処理
  */
 const onConnectButtonPushed = async () => {
@@ -97,8 +72,8 @@ const onConnectButtonPushed = async () => {
     waitUntilIceCandidate(connection),
     connection.setLocalDescription(description),
   ]);
-  displayRTCSessionDescriptionInit(description);
-  displayRTCIceCandidateInits(iceCandidates.map((c) => c.toJSON()));
+  displayOwnDescription(description);
+  displayOwnIceCandidates(iceCandidates.map((c) => c.toJSON()));
 };
 
 /**

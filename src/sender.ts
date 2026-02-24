@@ -3,6 +3,11 @@ import "./style.css";
 import { RTCIceCandidateInitSchema } from "./schemas/rtc-ice-candidate-init";
 import { RTCSessionDescriptionInitSchema } from "./schemas/rtc-session-description-init";
 import { waitUntilIceCandidate } from "./wait-untilIce-candidate";
+import {
+  displayOwnDescription,
+  displayOwnIceCandidates,
+  OWN_INFO_HTML,
+} from "./dom/own-info";
 
 /** アプリのルートHTML要素 */
 const app =
@@ -12,11 +17,7 @@ app.innerHTML = `
   <div>
     <h1>送信ページ (Sender)</h1>
 
-    <h2>自身の情報</h2>
-    <h3>RTCSessionDescriptionInit</h3>
-    <div id="description"></div>
-    <h3>RTCIceCandidateInit</h3>
-    <div id="ice-candidate"></div>
+    ${OWN_INFO_HTML}
 
     <h2>相手の情報を入力する</h2>
     <h3>Remote RTCSessionDescriptionInit</h3>
@@ -32,28 +33,6 @@ let connection: RTCPeerConnection | null = null;
 
 /** WebRTCデータチャネル、nullは未作成 */
 let sendChannel: RTCDataChannel | null = null;
-
-/**
- * RTCSessionDescriptionInitを画面に表示する
- * @param value 表示するRTCSessionDescriptionInit
- */
-const displayRTCSessionDescriptionInit = (
-  description: RTCSessionDescriptionInit,
-) => {
-  const descriptionElement =
-    document.getElementById("description") ?? document.createElement("div");
-  descriptionElement.textContent = JSON.stringify(description);
-};
-
-/**
- * すべてのRTCIceCandidateInitを画面に表示する
- * @param value 表示するRTCIceCandidateInit
- */
-const displayRTCIceCandidateInits = (candidates: RTCIceCandidateInit[]) => {
-  const iceCandidateElement =
-    document.getElementById("ice-candidate") ?? document.createElement("div");
-  iceCandidateElement.textContent = JSON.stringify(candidates);
-};
 
 /**
  * 入力したRemote RTCSessionDescriptionInitを取得する
@@ -119,6 +98,6 @@ window.onload = async () => {
     waitUntilIceCandidate(connection),
     connection.setLocalDescription(description),
   ]);
-  displayRTCSessionDescriptionInit(description);
-  displayRTCIceCandidateInits(iceCandidates.map((c) => c.toJSON()));
+  displayOwnDescription(description);
+  displayOwnIceCandidates(iceCandidates.map((c) => c.toJSON()));
 };

@@ -44,7 +44,7 @@ export const getOwnIceCandidateElement = (): HTMLElement =>
  * すべてのRTCIceCandidateInitを画面に表示する
  * @param value 表示するRTCIceCandidateInit
  */
-export const displayOwnIceCandidateInits = (
+export const displayOwnIceCandidates = (
   candidates: RTCIceCandidateInit[],
 ) => {
   const iceCandidateElement = getOwnIceCandidateElement();
