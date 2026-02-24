@@ -11,20 +11,30 @@ export const REMOTE_ICE_CANDIDATE_ELEMENT_ID = "remote-ice-candidate";
 export const REMOTE_INFO_HTML = `
   <h2>相手の情報を入力する</h2>
   <h3>Remote RTCSessionDescriptionInit</h3>
-  <textarea class="description-input" id="${REMOTE_DESCRIPTION_ELEMENT_ID}" placeholder="Remote RTCSessionDescriptionInitを入力してください"></textarea>
+  <textarea
+    class="description-input"
+    id="${REMOTE_DESCRIPTION_ELEMENT_ID}"
+    placeholder="Remote RTCSessionDescriptionInitを入力してください"
+  ></textarea>
   <h3>Remote ICE RTCIceCandidateInit</h3>
-  <textarea class="ice-input" id="${REMOTE_ICE_CANDIDATE_ELEMENT_ID}" placeholder="Remote RTCIceCandidateInitを入力してください"></textarea>
+  <textarea
+    class="ice-input"
+    id="${REMOTE_ICE_CANDIDATE_ELEMENT_ID}"
+    placeholder="Remote RTCIceCandidateInitを入力してください"
+  ></textarea>
 `;
 
 /**
  * 相手のDescriptionを入力するHTML要素を取得する
- * @returns 取得したHTML要素、見つからない場合は新しいtextarea要素を返す
+ * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
 export const getRemoteDescriptionElement = (): HTMLTextAreaElement => {
   const found = document.getElementById(REMOTE_DESCRIPTION_ELEMENT_ID);
-  return found instanceof HTMLTextAreaElement
-    ? found
-    : document.createElement("textarea");
+  if (!(found instanceof HTMLTextAreaElement)) {
+    throw new Error("相手のDescriptionを入力するHTML要素が見つかりません");
+  }
+
+  return found;
 };
 
 /**
@@ -39,13 +49,15 @@ export const getRemoteRTCSessionDescription = (): RTCSessionDescriptionInit => {
 
 /**
  * 相手のICE Candidateを入力するHTML要素を取得する
- * @returns 取得したHTML要素、見つからない場合は新しいtextarea要素を返す
+ * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
 export const getRemoteIceCandidateElement = (): HTMLTextAreaElement => {
   const found = document.getElementById(REMOTE_ICE_CANDIDATE_ELEMENT_ID);
-  return found instanceof HTMLTextAreaElement
-    ? found
-    : document.createElement("textarea");
+  if (!(found instanceof HTMLTextAreaElement)) {
+    throw new Error("相手のICE Candidateを入力するHTML要素が見つかりません");
+  }
+
+  return found;
 };
 
 /**

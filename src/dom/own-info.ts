@@ -15,11 +15,16 @@ export const OWN_INFO_HTML = `
 
 /**
  * 自身のRTCSessionDescriptionInitを表示するHTML要素を取得する
- * @returns 取得したHTML要素、見つからない場合は新しいdiv要素を返す
+ * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
-export const getOwnDescriptionElement = (): HTMLElement =>
-  document.getElementById(OWN_DESCRIPTION_ELEMENT_ID) ??
-  document.createElement("div");
+export const getOwnDescriptionElement = (): HTMLElement => {
+  const found = document.getElementById(OWN_DESCRIPTION_ELEMENT_ID);
+  if (!found) {
+    throw new Error("自身のDescriptionを表示するHTML要素が見つかりません");
+  }
+
+  return found;
+};
 
 /**
  * 自身のRTCSessionDescriptionInitを画面に表示する
@@ -34,19 +39,22 @@ export const displayOwnDescription = (
 
 /**
  * 自身のRTCIceCandidateInitを表示するHTML要素を取得する
- * @returns 取得したHTML要素、見つからない場合は新しいdiv要素を返す
+ * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
-export const getOwnIceCandidateElement = (): HTMLElement =>
-  document.getElementById(OWN_ICE_CANDIDATE_ELEMENT_ID) ??
-  document.createElement("div");
+export const getOwnIceCandidateElement = (): HTMLElement => {
+  const found = document.getElementById(OWN_ICE_CANDIDATE_ELEMENT_ID);
+  if (!found) {
+    throw new Error("自身のICE Candidateを表示するHTML要素が見つかりません");
+  }
+
+  return found;
+};
 
 /**
  * すべてのRTCIceCandidateInitを画面に表示する
  * @param candidates 表示するRTCIceCandidateInit
  */
-export const displayOwnIceCandidates = (
-  candidates: RTCIceCandidateInit[],
-) => {
+export const displayOwnIceCandidates = (candidates: RTCIceCandidateInit[]) => {
   const iceCandidateElement = getOwnIceCandidateElement();
   iceCandidateElement.textContent = JSON.stringify(candidates);
 };
