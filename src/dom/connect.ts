@@ -8,11 +8,13 @@ export const CONNECT_HTML = `
 
 /**
  * 接続ボタン HTML要素を取得する
- * @returns 取得したHTML要素、見つからない場合は新しいbutton要素を返す
+ * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
 export const getConnectButtonElement = (): HTMLButtonElement => {
   const found = document.getElementById(CONNECT_BUTTON_ELEMENT_ID);
-  return found instanceof HTMLButtonElement
-    ? found
-    : document.createElement("button");
+  if (!(found instanceof HTMLButtonElement)) {
+    throw new Error("接続ボタンのHTML要素が見つかりません");
+  }
+
+  return found;
 };

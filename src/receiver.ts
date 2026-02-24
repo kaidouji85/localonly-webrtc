@@ -12,11 +12,10 @@ import {
   REMOTE_INFO_HTML,
 } from "./dom/remote-info";
 import { CONNECT_HTML, getConnectButtonElement } from "./dom/connect";
+import { getAppElement } from "./dom/app";
 
 /** アプリのルートHTML要素 */
-const app =
-  document.querySelector<HTMLDivElement>("#app") ??
-  document.createElement("div");
+const app = getAppElement();
 app.innerHTML = `
   <div>
     <h1>受信ページ (Receiver)</h1>
