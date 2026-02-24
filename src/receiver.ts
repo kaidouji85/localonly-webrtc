@@ -14,7 +14,7 @@ import {
 
 /** アプリのルートHTML要素 */
 const app =
-  document.querySelector<HTMLDivElement>("#app") ||
+  document.querySelector<HTMLDivElement>("#app") ??
   document.createElement("div");
 app.innerHTML = `
   <div>
