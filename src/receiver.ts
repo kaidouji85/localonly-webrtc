@@ -20,7 +20,7 @@ app.innerHTML = `
   <div>
     <h1>受信ページ (Receiver)</h1>
     ${REMOTE_INFO_HTML}
-    ${CONNECT_HTML} 
+    ${CONNECT_HTML}
     ${OWN_INFO_HTML}
   </div>
 `;
