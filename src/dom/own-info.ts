@@ -23,7 +23,7 @@ export const getOwnDescriptionElement = (): HTMLElement =>
 
 /**
  * 自身のRTCSessionDescriptionInitを画面に表示する
- * @param value 表示するRTCSessionDescriptionInit
+ * @param description 表示するRTCSessionDescriptionInit
  */
 export const displayOwnDescription = (
   description: RTCSessionDescriptionInit,
@@ -42,7 +42,7 @@ export const getOwnIceCandidateElement = (): HTMLElement =>
 
 /**
  * すべてのRTCIceCandidateInitを画面に表示する
- * @param value 表示するRTCIceCandidateInit
+ * @param candidates 表示するRTCIceCandidateInit
  */
 export const displayOwnIceCandidates = (
   candidates: RTCIceCandidateInit[],
