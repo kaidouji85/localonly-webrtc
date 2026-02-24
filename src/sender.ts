@@ -9,6 +9,7 @@ import {
 import {
   getRemoteRTCIceCandidates,
   getRemoteRTCSessionDescription,
+  REMOTE_INFO_HTML,
 } from "./dom/remote-info";
 
 /** アプリのルートHTML要素 */
@@ -19,7 +20,7 @@ app.innerHTML = `
   <div>
     <h1>送信ページ (Sender)</h1>
     ${OWN_INFO_HTML}
-    ${OWN_INFO_HTML}
+    ${REMOTE_INFO_HTML}
   </div>
 `;
 
