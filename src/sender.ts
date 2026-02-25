@@ -13,12 +13,17 @@ import {
 } from "./dom/remote-info";
 import { CONNECT_HTML, getConnectButtonElement } from "./dom/connect";
 import { getAppElement } from "./dom/app";
+import {
+  CONNECTION_STATE_HTML,
+  refreshConnectionState,
+} from "./dom/connection-state";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
   <div>
     <h1>送信ページ (Sender)</h1>
+    ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
     ${CONNECT_HTML}
@@ -42,7 +47,17 @@ const onConnectButtonPushed = async () => {
   await Promise.all([
     ...remoteIceCandidates.map((c) => connection?.addIceCandidate(c)),
   ]);
-  console.log("接続が完了しました");
+};
+
+/**
+ * コネクションステートが変化したときの処理
+ */
+const onConnectionStateChange = () => {
+  if (!connection) {
+    throw new Error("接続が初期化されていません");
+  }
+
+  refreshConnectionState(connection.connectionState);
 };
 
 /**
@@ -53,6 +68,8 @@ window.onload = async () => {
   connectButton.addEventListener("click", onConnectButtonPushed);
 
   connection = new RTCPeerConnection();
+  refreshConnectionState(connection.connectionState);
+  connection.addEventListener("connectionstatechange", onConnectionStateChange);
   connection.createDataChannel("sendDataChannel");
   const description = await connection.createOffer();
   const [iceCandidates] = await Promise.all([
