@@ -4,7 +4,7 @@ export const CONNECTION_STATE_ELEMENT_ID = "connection-state";
 /** コネクションステート HTML */
 export const CONNECTION_STATE_HTML = `
   <h2>コネクションステート</h2>
-  <div id="${CONNECTION_STATE_ELEMENT_ID}"></div>
+  <div id="${CONNECTION_STATE_ELEMENT_ID}">connection not created</div>
 `;
 
 /**
