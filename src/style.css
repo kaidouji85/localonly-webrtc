@@ -95,6 +95,10 @@ button:focus-visible {
   }
 }
 
+.app-description {
+  margin-bottom: 5em;
+}
+
 .description-input {
   min-width: 40em;
   min-height: 20em;
