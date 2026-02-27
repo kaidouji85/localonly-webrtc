@@ -116,12 +116,12 @@ button:focus-visible {
   user-select: all;
 }
 
-.description-input {
+.remote-info__description-input {
   width: 90vw;
   min-height: 20em;
 }
 
-.ice-input {
+.remote-info__ice-input {
   width: 90vw;
   min-height: 10em;
 }
