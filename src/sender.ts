@@ -11,10 +11,10 @@ import {
   getRemoteRTCSessionDescription,
   REMOTE_INFO_HTML,
 } from "./dom/remote-info";
-import { CONNECT_HTML, getConnectButtonElement } from "./dom/connect";
 import { getAppElement } from "./dom/app";
 import {
   CONNECTION_STATE_HTML,
+  getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
 
@@ -26,7 +26,6 @@ app.innerHTML = `
     ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
-    ${CONNECT_HTML}
   </div>
 `;
 

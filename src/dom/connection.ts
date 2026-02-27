@@ -2,11 +2,11 @@
 export const CONNECTION_STATE_ELEMENT_ID = "connection-state";
 
 /** 接続ボタン HTML要素 ID */
-export const CONNECT_BUTTON_ELEMENT_ID = "connection-button";
+export const CONNECT_BUTTON_ELEMENT_ID = "connect-button";
 
 /** コネクションステート HTML */
 export const CONNECTION_STATE_HTML = `
-<div class="connection">
+<div class="connection"
   <h2 class="connection__title">コネクション</h2>
   <h3 class="connection__state-title">ステート</h3>
   <div class="connection__state-value" id="${CONNECTION_STATE_ELEMENT_ID}">connection not created</div>
