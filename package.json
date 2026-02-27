@@ -1,18 +1,22 @@
 {
   "name": "localonly-webrtc",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+  "dependencies": {
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
+    "rimraf": "^6.1.3",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
   },
-  "dependencies": {
-    "zod": "^4.3.6"
-  }
+  "private": true,
+  "scripts": {
+    "build": "tsc && vite build",
+    "clean": "rimraf dist",
+    "dev": "vite",
+    "preview": "vite preview",
+    "serve": "http-server dist -p 3000 -c-1"
+  },
+  "type": "module"
 }
