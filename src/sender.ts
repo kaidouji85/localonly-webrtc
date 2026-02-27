@@ -16,7 +16,7 @@ import { getAppElement } from "./dom/app";
 import {
   CONNECTION_STATE_HTML,
   refreshConnectionState,
-} from "./dom/connection-state";
+} from "./dom/connection";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();

@@ -159,15 +159,26 @@ button:focus-visible {
   min-height: 10em;
 }
 
-.connection-state {
+.connection {
   border: 1px solid rgba(255, 255, 255, 0.87);
   padding: 1em;
   border-radius: 0.5em;
   width: 90vw;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.connection-state__title {
+.connection__title {
   border-bottom: 1px solid rgba(255, 255, 255, 0.87);
   margin: 0;
+}
+
+.connection__state-title {
+  margin-bottom: 0;
+}
+
+.connection__connect-button {
+  margin-top: 2em;
+  border: 1px solid #808080;
 }
