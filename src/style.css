@@ -95,8 +95,14 @@ button:focus-visible {
   }
 }
 
-.app-introduction {
-  margin-bottom: 5em;
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.main__introduction {
+  margin-bottom: 3em;
 }
 
 .own-info__description-value,
