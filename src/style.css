@@ -111,11 +111,13 @@ button:focus-visible {
   border-radius: 0.5em;
   width: 90vw;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .own-info__title {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.87);
-    margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  margin: 0;
 }
 
 .own-info__description-value,
@@ -128,12 +130,25 @@ button:focus-visible {
   user-select: all;
 }
 
-.remote-info__description-input {
+.remote-info {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  padding: 1em;
+  border-radius: 0.5em;
   width: 90vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.remote-info__title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  margin: 0;
+}
+
+.remote-info__description-input {
   min-height: 20em;
 }
 
 .remote-info__ice-input {
-  width: 90vw;
   min-height: 10em;
 }
