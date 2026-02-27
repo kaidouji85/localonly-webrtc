@@ -99,11 +99,15 @@ button:focus-visible {
   margin-bottom: 5em;
 }
 
-.own-description,
-.own-ice-candidate {
+.own-info__description-value,
+.own-info__ice-candidate-value {
   width: 90vw;
   word-break: break-all;
   text-align: left;
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
 }
 
 .description-input {

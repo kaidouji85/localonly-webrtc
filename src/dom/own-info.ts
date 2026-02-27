@@ -6,11 +6,13 @@ export const OWN_ICE_CANDIDATE_ELEMENT_ID = "own-ice-candidate";
 
 /** 自身の情報 HTML */
 export const OWN_INFO_HTML = `
-  <h2>自身の情報</h2>
-  <h3>RTCSessionDescriptionInit</h3>
-  <div id="${OWN_DESCRIPTION_ELEMENT_ID}" class="own-description"></div>
-  <h3>RTCIceCandidateInit</h3>
-  <div id="${OWN_ICE_CANDIDATE_ELEMENT_ID}" class="own-ice-candidate"></div>
+<div class="own-info">
+  <h2 class="own-info__title">自身の情報</h2>
+  <h3 class="own-info__description-title">RTCSessionDescriptionInit</h3>
+  <div class="own-info__description-value" id="${OWN_DESCRIPTION_ELEMENT_ID}"></div>
+  <h3 class="own-info__ice-candidate-title">RTCIceCandidateInit</h3>
+  <div class="own-info__ice-candidate-value" id="${OWN_ICE_CANDIDATE_ELEMENT_ID}"></div>
+</div>
 `;
 
 /**
