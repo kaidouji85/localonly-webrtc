@@ -95,16 +95,23 @@ button:focus-visible {
   }
 }
 
-.app-description {
+.app-introduction {
   margin-bottom: 5em;
 }
 
+.own-description,
+.own-ice-candidate {
+  width: 90vw;
+  word-break: break-all;
+  text-align: left;
+}
+
 .description-input {
-  min-width: 40em;
+  width: 90vw;
   min-height: 20em;
 }
 
 .ice-input {
-  min-width: 40em;
+  width: 90vw;
   min-height: 10em;
 }

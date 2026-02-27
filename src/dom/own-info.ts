@@ -8,9 +8,9 @@ export const OWN_ICE_CANDIDATE_ELEMENT_ID = "own-ice-candidate";
 export const OWN_INFO_HTML = `
   <h2>自身の情報</h2>
   <h3>RTCSessionDescriptionInit</h3>
-  <div id="${OWN_DESCRIPTION_ELEMENT_ID}"></div>
+  <div id="${OWN_DESCRIPTION_ELEMENT_ID}" class="own-description"></div>
   <h3>RTCIceCandidateInit</h3>
-  <div id="${OWN_ICE_CANDIDATE_ELEMENT_ID}"></div>
+  <div id="${OWN_ICE_CANDIDATE_ELEMENT_ID}" class="own-ice-candidate"></div>
 `;
 
 /**
