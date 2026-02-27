@@ -105,9 +105,21 @@ button:focus-visible {
   margin-bottom: 3em;
 }
 
+.own-info {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  padding: 1em;
+  border-radius: 0.5em;
+  width: 90vw;
+  box-sizing: border-box;
+}
+
+.own-info__title {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+    margin: 0;
+}
+
 .own-info__description-value,
 .own-info__ice-candidate-value {
-  width: 90vw;
   word-break: break-all;
   text-align: left;
   -webkit-user-select: all;
