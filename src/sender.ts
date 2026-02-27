@@ -11,22 +11,21 @@ import {
   getRemoteRTCSessionDescription,
   REMOTE_INFO_HTML,
 } from "./dom/remote-info";
-import { CONNECT_HTML, getConnectButtonElement } from "./dom/connect";
 import { getAppElement } from "./dom/app";
 import {
   CONNECTION_STATE_HTML,
+  getConnectButtonElement,
   refreshConnectionState,
-} from "./dom/connection-state";
+} from "./dom/connection";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
-  <div>
-    <h1>送信ページ (Sender)</h1>
+  <div class="sender">
+    <h1 class="sender__title">送信ページ (Sender)</h1>
     ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
-    ${CONNECT_HTML}
   </div>
 `;
 

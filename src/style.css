@@ -95,12 +95,96 @@ button:focus-visible {
   }
 }
 
-.description-input {
-  min-width: 40em;
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.main__introduction {
+  margin-bottom: 3em;
+}
+
+.sender {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.receiver {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.own-info {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  padding: 1em;
+  border-radius: 0.5em;
+  width: 90vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.own-info__title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  margin: 0;
+}
+
+.own-info__description-value,
+.own-info__ice-candidate-value {
+  word-break: break-all;
+  text-align: left;
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
+
+.remote-info {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  padding: 1em;
+  border-radius: 0.5em;
+  width: 90vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.remote-info__title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  margin: 0;
+}
+
+.remote-info__description-input {
   min-height: 20em;
 }
 
-.ice-input {
-  min-width: 40em;
+.remote-info__ice-input {
   min-height: 10em;
+}
+
+.connection {
+  border: 1px solid rgba(255, 255, 255, 0.87);
+  padding: 1em;
+  border-radius: 0.5em;
+  width: 90vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.connection__title {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  margin: 0;
+}
+
+.connection__state-title {
+  margin-bottom: 0;
+}
+
+.connection__connect-button {
+  margin-top: 2em;
+  border: 1px solid #808080;
 }

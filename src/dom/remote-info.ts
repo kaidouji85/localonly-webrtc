@@ -9,19 +9,21 @@ export const REMOTE_ICE_CANDIDATE_ELEMENT_ID = "remote-ice-candidate";
 
 /** 相手の情報 HTML */
 export const REMOTE_INFO_HTML = `
-  <h2>相手の情報を入力する</h2>
-  <h3>Remote RTCSessionDescriptionInit</h3>
+<div class="remote-info">
+  <h2 class="remote-info__title">相手の情報を入力する</h2>
+  <h3 class="remote-info__description-title">Remote RTCSessionDescriptionInit</h3>
   <textarea
-    class="description-input"
+    class="remote-info__description-input"
     id="${REMOTE_DESCRIPTION_ELEMENT_ID}"
     placeholder="Remote RTCSessionDescriptionInitを入力してください"
   ></textarea>
-  <h3>Remote ICE RTCIceCandidateInit</h3>
+  <h3 class="remote-info__ice-title">Remote ICE RTCIceCandidateInit</h3>
   <textarea
-    class="ice-input"
+    class="remote-info__ice-input"
     id="${REMOTE_ICE_CANDIDATE_ELEMENT_ID}"
     placeholder="Remote RTCIceCandidateInitを入力してください"
   ></textarea>
+</div>
 `;
 
 /**
