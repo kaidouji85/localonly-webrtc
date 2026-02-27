@@ -105,6 +105,12 @@ button:focus-visible {
   margin-bottom: 3em;
 }
 
+.sender {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
 .own-info {
   border: 1px solid rgba(255, 255, 255, 0.87);
   padding: 1em;

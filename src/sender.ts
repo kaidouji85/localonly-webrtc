@@ -21,8 +21,8 @@ import {
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
-  <div>
-    <h1>送信ページ (Sender)</h1>
+  <div class="sender">
+    <h1 class="sender__title">送信ページ (Sender)</h1>
     ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
