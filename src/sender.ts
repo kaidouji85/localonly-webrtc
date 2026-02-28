@@ -17,12 +17,14 @@ import {
   getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
+import { MESSAGE_HTML } from "./dom/message";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
   <div class="sender">
     <h1 class="sender__title">送信ページ (Sender)</h1>
+    ${MESSAGE_HTML}
     ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
