@@ -17,7 +17,13 @@ import {
   getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
-import { MESSAGE_HTML } from "./dom/message";
+import {
+  addMessage,
+  clearMessageInput,
+  getMessageInputElement,
+  getMessageSendButtonElement,
+  MESSAGE_HTML,
+} from "./dom/message";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
@@ -65,11 +71,29 @@ const onConnectionStateChange = () => {
 };
 
 /**
+ * メッセージ送信ボタンが押されたときの処理
+ */
+const onMessageSendButtonPushed = () => {
+  if (!dataChannel) {
+    throw new Error("データチャネルが初期化されていません");
+  }
+
+  const messageInputElement = getMessageInputElement();
+  const message = messageInputElement.value;
+  dataChannel.send(message);
+  addMessage(`自分: ${message}`);
+  clearMessageInput();
+};
+
+/**
  * エントリポイント
  */
 window.onload = async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
+
+  const messageSendButton = getMessageSendButtonElement();
+  messageSendButton.addEventListener("click", onMessageSendButtonPushed);
 
   connection = new RTCPeerConnection();
   refreshConnectionState(connection.connectionState);
