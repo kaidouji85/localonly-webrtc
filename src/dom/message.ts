@@ -31,6 +31,17 @@ export const getMessageContentElement = (): HTMLElement => {
 };
 
 /**
+ * メッセージを追加する
+ * @param message 追加するメッセージ内容
+ */
+export const addMessage = (message: string): void => {
+  const messageContentElement = getMessageContentElement();
+  const messageElement = document.createElement("p");
+  messageElement.textContent = message;
+  messageContentElement.appendChild(messageElement);
+};
+
+/**
  * メッセージ入力HTML要素を取得する
  * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
