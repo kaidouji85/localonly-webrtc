@@ -34,6 +34,9 @@ app.innerHTML = `
 /** WebRTCコネクション、nullは未接続 */
 let connection: RTCPeerConnection | null = null;
 
+/** データチャネル、nullは未接続 */
+let dataChannel: RTCDataChannel | null = null;
+
 /**
  * 接続ボタンが押されたときの処理
  */
@@ -71,7 +74,7 @@ window.onload = async () => {
   connection = new RTCPeerConnection();
   refreshConnectionState(connection.connectionState);
   connection.addEventListener("connectionstatechange", onConnectionStateChange);
-  connection.createDataChannel("sendDataChannel");
+  dataChannel = connection.createDataChannel("sendDataChannel");
   const description = await connection.createOffer();
   const [iceCandidates] = await Promise.all([
     // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく

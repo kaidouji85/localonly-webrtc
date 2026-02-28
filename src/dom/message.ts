@@ -55,6 +55,14 @@ export const getMessageInputElement = (): HTMLInputElement => {
 };
 
 /**
+ * メッセージ入力をクリアする
+ */
+export const clearMessageInput = (): void => {
+  const messageInputElement = getMessageInputElement();
+  messageInputElement.value = "";
+};
+
+/**
  * メッセージ送信ボタンHTML要素を取得する
  * @returns 取得したHTML要素、見つからない場合はエラーを投げる
  */
