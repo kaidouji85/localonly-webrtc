@@ -42,9 +42,9 @@ export const refreshConnectionState = (state: RTCPeerConnectionState) => {
  */
 export const getConnectButtonElement = (): HTMLButtonElement => {
   const found = document.getElementById(CONNECT_BUTTON_ELEMENT_ID);
-  if (!found) {
+  if (!(found instanceof HTMLButtonElement)) {
     throw new Error("接続ボタンが見つかりません");
   }
 
-  return found as HTMLButtonElement;
+  return found;
 };
