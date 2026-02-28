@@ -17,12 +17,20 @@ import {
   getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
+import {
+  addMessage,
+  clearMessageInput,
+  getMessageInputElement,
+  getMessageSendButtonElement,
+  MESSAGE_HTML,
+} from "./dom/message";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
   <div class="receiver">
     <h1 class="receiver__title">受信ページ (Receiver)</h1>
+    ${MESSAGE_HTML}
     ${CONNECTION_STATE_HTML}
     ${REMOTE_INFO_HTML}
     ${OWN_INFO_HTML}
@@ -31,6 +39,9 @@ app.innerHTML = `
 
 /** WebRTCコネクション、nullは未接続 */
 let connection: RTCPeerConnection | null = null;
+
+/** データチャネル、nullは未接続 */
+let dataChannel: RTCDataChannel | null = null;
 
 /**
  * コネクションステートが変化したときの処理
@@ -44,10 +55,38 @@ const onConnectionStateChange = () => {
 };
 
 /**
+ * DataChannelが接続されたときの処理
+ * @param event イベント
+ */
+const onDataChannel = (event: RTCDataChannelEvent) => {
+  dataChannel = event.channel;
+  dataChannel.addEventListener("message", (event) => {
+    const message = event.data;
+    addMessage(`相手: ${message}`);
+  });
+};
+
+/**
+ * メッセージ送信ボタンが押されたときの処理
+ */
+const onMessageSendButtonPushed = () => {
+  if (!dataChannel) {
+    throw new Error("データチャネルが初期化されていません");
+  }
+
+  const messageInputElement = getMessageInputElement();
+  const message = messageInputElement.value;
+  dataChannel.send(message);
+  addMessage(`自分: ${message}`);
+  clearMessageInput();
+};
+
+/**
  * 接続ボタンが押されたときの処理
  */
 const onConnectButtonPushed = async () => {
   connection = new RTCPeerConnection();
+  connection.addEventListener("datachannel", onDataChannel);
   refreshConnectionState(connection.connectionState);
   connection.addEventListener("connectionstatechange", onConnectionStateChange);
   const remoteDescription = getRemoteRTCSessionDescription();
@@ -72,4 +111,7 @@ const onConnectButtonPushed = async () => {
 window.onload = async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
+
+  const messageSendButton = getMessageSendButtonElement();
+  messageSendButton.addEventListener("click", onMessageSendButtonPushed);
 };

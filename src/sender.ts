@@ -17,12 +17,20 @@ import {
   getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
+import {
+  addMessage,
+  clearMessageInput,
+  getMessageInputElement,
+  getMessageSendButtonElement,
+  MESSAGE_HTML,
+} from "./dom/message";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
 app.innerHTML = `
   <div class="sender">
     <h1 class="sender__title">送信ページ (Sender)</h1>
+    ${MESSAGE_HTML}
     ${CONNECTION_STATE_HTML}
     ${OWN_INFO_HTML}
     ${REMOTE_INFO_HTML}
@@ -31,6 +39,9 @@ app.innerHTML = `
 
 /** WebRTCコネクション、nullは未接続 */
 let connection: RTCPeerConnection | null = null;
+
+/** データチャネル、nullは未接続 */
+let dataChannel: RTCDataChannel | null = null;
 
 /**
  * 接続ボタンが押されたときの処理
@@ -60,16 +71,44 @@ const onConnectionStateChange = () => {
 };
 
 /**
+ * メッセージ送信ボタンが押されたときの処理
+ */
+const onMessageSendButtonPushed = () => {
+  if (!dataChannel) {
+    throw new Error("データチャネルが初期化されていません");
+  }
+
+  const messageInputElement = getMessageInputElement();
+  const message = messageInputElement.value;
+  dataChannel.send(message);
+  addMessage(`自分: ${message}`);
+  clearMessageInput();
+};
+
+/**
+ * メッセージを受信したときの処理
+ * @param event イベント
+ */
+const onMessage = (event: MessageEvent) => {
+  const message = event.data;
+  addMessage(`相手: ${message}`);
+};
+
+/**
  * エントリポイント
  */
 window.onload = async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
 
+  const messageSendButton = getMessageSendButtonElement();
+  messageSendButton.addEventListener("click", onMessageSendButtonPushed);
+
   connection = new RTCPeerConnection();
   refreshConnectionState(connection.connectionState);
   connection.addEventListener("connectionstatechange", onConnectionStateChange);
-  connection.createDataChannel("sendDataChannel");
+  dataChannel = connection.createDataChannel("sendDataChannel");
+  dataChannel.addEventListener("message", onMessage);
   const description = await connection.createOffer();
   const [iceCandidates] = await Promise.all([
     // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく
