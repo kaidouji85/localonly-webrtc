@@ -2,7 +2,7 @@
 export const MESSAGE_CONTENT_ELEMENT_ID = "message-content";
 
 /** メッセージ入力 HTML要素 ID */
-export const MESSAGE_INPUT_ELEMENT_ID = "message--input";
+export const MESSAGE_INPUT_ELEMENT_ID = "message-input";
 
 /** メッセージ送信ボタン HTML要素 ID */
 export const MESSAGE_SEND_BUTTON_ELEMENT_ID = "message-send-button";
