@@ -17,7 +17,13 @@ import {
   getConnectButtonElement,
   refreshConnectionState,
 } from "./dom/connection";
-import { addMessage, MESSAGE_HTML } from "./dom/message";
+import {
+  addMessage,
+  clearMessageInput,
+  getMessageInputElement,
+  getMessageSendButtonElement,
+  MESSAGE_HTML,
+} from "./dom/message";
 
 /** アプリのルートHTML要素 */
 const app = getAppElement();
@@ -58,7 +64,22 @@ const onDataChannel = (event: RTCDataChannelEvent) => {
     const message = event.data;
     addMessage(`相手: ${message}`);
   });
-}
+};
+
+/**
+ * メッセージ送信ボタンが押されたときの処理
+ */
+const onMessageSendButtonPushed = () => {
+  if (!dataChannel) {
+    throw new Error("データチャネルが初期化されていません");
+  }
+
+  const messageInputElement = getMessageInputElement();
+  const message = messageInputElement.value;
+  dataChannel.send(message);
+  addMessage(`自分: ${message}`);
+  clearMessageInput();
+};
 
 /**
  * 接続ボタンが押されたときの処理
@@ -90,4 +111,7 @@ const onConnectButtonPushed = async () => {
 window.onload = async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
+
+  const messageSendButton = getMessageSendButtonElement();
+  messageSendButton.addEventListener("click", onMessageSendButtonPushed);
 };

@@ -86,6 +86,15 @@ const onMessageSendButtonPushed = () => {
 };
 
 /**
+ * メッセージを受信したときの処理
+ * @param event イベント
+ */
+const onMessage = (event: MessageEvent) => {
+  const message = event.data;
+  addMessage(`相手: ${message}`);
+};
+
+/**
  * エントリポイント
  */
 window.onload = async () => {
@@ -99,6 +108,7 @@ window.onload = async () => {
   refreshConnectionState(connection.connectionState);
   connection.addEventListener("connectionstatechange", onConnectionStateChange);
   dataChannel = connection.createDataChannel("sendDataChannel");
+  dataChannel.addEventListener("message", onMessage);
   const description = await connection.createOffer();
   const [iceCandidates] = await Promise.all([
     // icecandidateイベントはsetLocalDescriptionの後に発生するため、先に待機しておく

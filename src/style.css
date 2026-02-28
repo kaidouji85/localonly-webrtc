@@ -134,7 +134,7 @@ button:focus-visible {
 }
 
 .message__content {
-  min-height: 10em;
+  height: 10em;
   border: 1px solid #808080;
   padding: 0.5em;
   border-radius: 0.5em;
