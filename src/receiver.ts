@@ -106,12 +106,25 @@ const onConnectButtonPushed = async () => {
 };
 
 /**
- * エントリポイント
+ * ページが読み込まれたときの処理
  */
-window.onload = async () => {
+window.addEventListener("load", async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
 
   const messageSendButton = getMessageSendButtonElement();
   messageSendButton.addEventListener("click", onMessageSendButtonPushed);
-};
+});
+
+/**
+ * ページが閉じられるときの処理
+ */
+window.addEventListener("beforeunload", () => {
+  dataChannel?.close();
+  dataChannel = null;
+
+  connection?.close();
+  connection = null;
+
+  refreshConnectionState("closed");
+});

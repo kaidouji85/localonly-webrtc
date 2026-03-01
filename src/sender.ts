@@ -95,9 +95,9 @@ const onMessage = (event: MessageEvent) => {
 };
 
 /**
- * エントリポイント
+ * ページが読み込まれたときの処理
  */
-window.onload = async () => {
+window.addEventListener("load", async () => {
   const connectButton = getConnectButtonElement();
   connectButton.addEventListener("click", onConnectButtonPushed);
 
@@ -117,4 +117,17 @@ window.onload = async () => {
   ]);
   displayOwnDescription(description);
   displayOwnIceCandidates(iceCandidates.map((c) => c.toJSON()));
-};
+});
+
+/**
+ * ブラウザを閉じるときの処理
+ */
+window.addEventListener("beforeunload", () => {
+  dataChannel?.close();
+  dataChannel = null;
+
+  connection?.close();
+  connection = null;
+
+  refreshConnectionState("closed");
+});
